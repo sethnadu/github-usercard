@@ -62,7 +62,7 @@ body {
   background: linear-gradient(141deg, #9fb8ad 0%, #1fc8db 51%, #2cb5e8 75%);
 }
 .container {
-  max-width: 800px;
+  max-width: 900px;
   margin: 50px auto;
   padding: 30px;
   display: flex;
@@ -124,6 +124,15 @@ body {
 .card p {
   font-size: 1.4rem;
   margin-bottom: 3px;
+  margin-top:3px;
+}
+
+.card a {
+  font-size: 1.4rem;
+  margin-bottom: 3px;
+  margin-top: 3px;
+  text-decoration: none;
+  color: red;
 }
 
 .card .username {
@@ -137,7 +146,7 @@ body {
 }
 
 .card-open {
-  height: 300px;
+  height: 450px;
   transition: height 0.8s ease-out;
   
 }
@@ -162,4 +171,8 @@ body {
   height: 30px;
   width: 100px;
   font-size: 1.2rem;
+}
+
+img.githubimg {
+  width: 500px;
 }

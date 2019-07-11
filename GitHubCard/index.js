@@ -46,8 +46,10 @@ axios.get(`https://api.github.com/users/${names}`)
     const followersCount = data.data.followers;
     const followingCount = data.data.following;
     const bio = data.data.bio;
+    
     // create a variable with the function below holding the variables made from each information attained from the api of each person
     const person = createGitHubCards(img, name, username, location, address, htmlAddress, repo, followersCount, followingCount, bio);
+
     cards.appendChild(person);
   });
 });
@@ -121,12 +123,17 @@ const closeButton = document.createElement('span')
 const usersName = document.createElement("h3");
 const userName = document.createElement("p");
 const userLocation= document.createElement("p");
-const userAddress = document.createElement("p");
-const userHtmlAddress = document.createElement("p");
+const userAddress = document.createElement("a");
+userAddress.setAttribute("href", address);
+const userHtmlAddress = document.createElement("a");
+userHtmlAddress.setAttribute("href", htmlAddress);
 const userRepo = document.createElement("p");
 const userFollowers = document.createElement("p");
 const userFollowing = document.createElement("p");
 const userBio = document.createElement("p");
+const gitCalender = document.createElement("img");
+gitCalender.setAttribute("src", `http://ghchart.rshah.org/${username}` );
+gitCalender.setAttribute("alt", `${username}'s Github Chart` );
 
 
 cardDiv.classList.add("card");
@@ -136,6 +143,7 @@ userName.classList.add("username");
 buttons.classList.add("buttons")
 expandButton.classList.add("expandButton")
 closeButton.classList.add("closeButton", "display" )
+gitCalender.classList.add("githubimg")
 
 cardDiv.appendChild(userImg);
 cardDiv.appendChild(cardInfoDiv);
@@ -143,22 +151,25 @@ cardInfoDiv.appendChild(usersName);
 cardInfoDiv.appendChild(userName);
 cardInfoDiv.appendChild(userLocation);
 cardInfoDiv.appendChild(userAddress);
-cardInfoDiv.appendChild(userHtmlAddress);
 cardInfoDiv.appendChild(userRepo);
+cardInfoDiv.appendChild(userHtmlAddress);
 cardInfoDiv.appendChild(userFollowers);
 cardInfoDiv.appendChild(userFollowing);
 cardInfoDiv.appendChild(userBio);
+cardInfoDiv.appendChild(gitCalender);
+
 cardDiv.appendChild(buttons);
 buttons.appendChild(expandButton);
 buttons.appendChild(closeButton);
+
 
 
 userImg.src = img;
 usersName.textContent = name;
 userName.textContent = username;
 userLocation.textContent = "location: " + location;
-userAddress.textContent = "API: " + address;
-userHtmlAddress.textContent = "Github: " + htmlAddress;
+userAddress.textContent = `${address}`;
+userHtmlAddress.textContent = `${htmlAddress}`;
 userRepo.textContent ="Repositories: " + repo;
 userFollowers.textContent ="Followers: " + followersCount;
 userFollowing.textContent ="Following: " + followingCount;
