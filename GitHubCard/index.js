@@ -19,10 +19,17 @@ const leana = "leananepari";
 const rosa = "paintedlbird7";
 const crystal = "cmstexas";
 const seth = "sethnadu";
-const davinder = "davinder"
+const davinder = "davinder";
+const dannyV = "dannyvidal";
+const danielF = "tetondan";
+const dustin = "dustinmyers";
+const danLevy = "justsml";
+const luisH = "luishrd";
+const josh = "bigknell";
+
 
 // github handle variables inside of array
-const followersArray = [jonathanScott, john, leana, rosa, crystal, davinder, seth ];
+const followersArray = [jonathanScott, john, leana, rosa, crystal, davinder, dannyV, danielF, dustin, danLevy, luisH, josh, seth ];
 
 // followersArray foreach over the github handle variable and apply it's corresponding information from their api
 followersArray.forEach(names => {
@@ -34,11 +41,13 @@ axios.get(`https://api.github.com/users/${names}`)
     const username = data.data.login;
     const location = data.data.location;
     const address = data.data.url;
+    const htmlAddress = data.data.html_url;
+    const repo = data.data.public_repos;
     const followersCount = data.data.followers;
     const followingCount = data.data.following;
     const bio = data.data.bio;
     // create a variable with the function below holding the variables made from each information attained from the api of each person
-    const person = createGitHubCards(img, name, username, location, address, followersCount, followingCount, bio);
+    const person = createGitHubCards(img, name, username, location, address, htmlAddress, repo, followersCount, followingCount, bio);
     cards.appendChild(person);
   });
 });
@@ -101,23 +110,32 @@ axios.get(`https://api.github.com/users/${names}`)
 
 //function created to make the html, apple classnames, append(nest) to the right nesting, at textcontent from api
 
-function createGitHubCards(img, name, username, location, address, followersCount, followingCount, bio) {
+function createGitHubCards(img, name, username, location, address, htmlAddress, repo, followersCount, followingCount, bio) {
 
 const cardDiv = document.createElement("div");
 const userImg = document.createElement('img');
 const cardInfoDiv = document.createElement("div");
+const buttons = document.createElement("div");
+const expandButton = document.createElement('span')
+const closeButton = document.createElement('span')
 const usersName = document.createElement("h3");
 const userName = document.createElement("p");
 const userLocation= document.createElement("p");
 const userAddress = document.createElement("p");
+const userHtmlAddress = document.createElement("p");
+const userRepo = document.createElement("p");
 const userFollowers = document.createElement("p");
 const userFollowing = document.createElement("p");
 const userBio = document.createElement("p");
+
 
 cardDiv.classList.add("card");
 cardInfoDiv.classList.add("card-info");
 usersName.classList.add("name");
 userName.classList.add("username");
+buttons.classList.add("buttons")
+expandButton.classList.add("expandButton")
+closeButton.classList.add("closeButton", "display" )
 
 cardDiv.appendChild(userImg);
 cardDiv.appendChild(cardInfoDiv);
@@ -125,18 +143,43 @@ cardInfoDiv.appendChild(usersName);
 cardInfoDiv.appendChild(userName);
 cardInfoDiv.appendChild(userLocation);
 cardInfoDiv.appendChild(userAddress);
+cardInfoDiv.appendChild(userHtmlAddress);
+cardInfoDiv.appendChild(userRepo);
 cardInfoDiv.appendChild(userFollowers);
 cardInfoDiv.appendChild(userFollowing);
 cardInfoDiv.appendChild(userBio);
+cardDiv.appendChild(buttons);
+buttons.appendChild(expandButton);
+buttons.appendChild(closeButton);
+
 
 userImg.src = img;
 usersName.textContent = name;
 userName.textContent = username;
-userLocation.textContent = location;
-userAddress.textContent = address;
-userFollowers.textContent = followersCount;
-userFollowing.textContent = followingCount;
-userBio.textContent = bio;
+userLocation.textContent = "location: " + location;
+userAddress.textContent = "API: " + address;
+userHtmlAddress.textContent = "Github: " + htmlAddress;
+userRepo.textContent ="Repositories: " + repo;
+userFollowers.textContent ="Followers: " + followersCount;
+userFollowing.textContent ="Following: " + followingCount;
+userBio.textContent ="Bio: " + bio;
+expandButton.textContent = "Click to Expand";
+closeButton.textContent = "Click to Close";
+
+buttons.addEventListener("click", () => {
+  expandButton.classList.toggle("display");
+  closeButton.classList.toggle("display");
+})
+
+expandButton.addEventListener("click", () => {
+  cardDiv.classList.add("card-open");
+  cardDiv.classList.remove("card-close");
+})
+
+closeButton.addEventListener("click", () => {
+  cardDiv.classList.add("card-close");
+  cardDiv.classList.remove("card-open");
+})
 
 return cardDiv;
 
