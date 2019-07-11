@@ -3,13 +3,32 @@
            https://api.github.com/users/<your name>
 */
 
+
+
+
+
+
+
+//find main location in html where date will be added
 const cards = document.querySelector(".cards");
 
-const seth = axios.get("https://api.github.com/users/sethnadu");
+// variables for each github handle
+const jonathanScott = "jondscott21";
+const john = "Bigorange8801";
+const leana = "leananepari";
+const rosa = "paintedlbird7";
+const crystal = "cmstexas";
+const seth = "sethnadu";
+const davinder = "davinder"
 
-console.log(seth);
-seth 
+// github handle variables inside of array
+const followersArray = [jonathanScott, john, leana, rosa, crystal, davinder, seth ];
+
+// followersArray foreach over the github handle variable and apply it's corresponding information from their api
+followersArray.forEach(names => {
+axios.get(`https://api.github.com/users/${names}`)
   .then(data => {
+   
     const img = data.data.avatar_url;
     const name = data.data.name;
     const username = data.data.login;
@@ -18,13 +37,18 @@ seth
     const followersCount = data.data.followers;
     const followingCount = data.data.following;
     const bio = data.data.bio;
+    // create a variable with the function below holding the variables made from each information attained from the api of each person
+    const person = createGitHubCards(img, name, username, location, address, followersCount, followingCount, bio);
+    cards.appendChild(person);
+  });
+});
 
-    console.log(username)
 
-    const sethNadu = createGitHubCards(img, name, username, location, address, followersCount, followingCount, bio);
 
-    cards.appendChild(sethNadu);
-  })
+
+
+
+
 
 
 /* Step 2: Inspect and study the data coming back, this is YOUR 
@@ -48,7 +72,7 @@ seth
           user, and adding that card to the DOM.
 */
 
-const followersArray = [];
+
 
 /* Step 3: Create a function that accepts a single object as its only argument,
           Using DOM methods and properties, create a component that will return the following DOM element:
@@ -70,6 +94,12 @@ const followersArray = [];
 
 */
 
+
+
+
+
+
+//function created to make the html, apple classnames, append(nest) to the right nesting, at textcontent from api
 
 function createGitHubCards(img, name, username, location, address, followersCount, followingCount, bio) {
 
@@ -111,6 +141,8 @@ userBio.textContent = bio;
 return cardDiv;
 
 }
+
+
 
 /* List of LS Instructors Github username's: 
   tetondan
