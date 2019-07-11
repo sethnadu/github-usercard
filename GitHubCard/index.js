@@ -34,6 +34,7 @@ const followersArray = [jonathanScott, john, leana, rosa, crystal, davinder, dan
 // followersArray foreach over the github handle variable and apply it's corresponding information from their api
 followersArray.forEach(names => {
 axios.get(`https://api.github.com/users/${names}`)
+
   .then(data => {
    
     const img = data.data.avatar_url;
@@ -51,7 +52,11 @@ axios.get(`https://api.github.com/users/${names}`)
     const person = createGitHubCards(img, name, username, location, address, htmlAddress, repo, followersCount, followingCount, bio);
 
     cards.appendChild(person);
-  });
+  })
+
+  .catch( error => {
+    console.log("Error, couldn't pull from API", error);
+  })
 });
 
 
